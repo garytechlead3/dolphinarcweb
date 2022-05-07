@@ -1,0 +1,20 @@
+@font-face {
+	font-family: Cocogoose;
+	src: url('../public/fonts/cocogoose.ttf');
+	font-display: swap;
+    font-weight: 300;
+}
+
+@font-face {
+	font-family: Cocogoose;
+	src: url('../public/fonts/cocogoose-semibold.ttf');
+	font-display: swap;
+    font-weight: 500;
+}
+
+@font-face {
+	font-family: Cocogoose;
+	src: url('../public/fonts/cocogoose-bold.ttf');
+	font-display: swap;
+    font-weight: bold;
+}
