@@ -140,10 +140,10 @@ const ElementFinderForm: React.FC = () => {
     console.log(data);
   };
 
-  const handleSubmit = (year, month,email) => {
+  const handleSubmit = (year, month) => {
     router.push({
       pathname: `/result/[month]`,
-      query: { month, year,email },
+      query: { month, year },
     });
   };
 
@@ -204,7 +204,7 @@ const ElementFinderForm: React.FC = () => {
             </label>
           </div>
         </FormContainer>
-        <button onClick={() => handleSubmit(data?.year, data?.month,data?.email)}>
+        <button onClick={() => handleSubmit(data?.year, data?.month)}>
           Custom
         </button>
       </IntroContainer>

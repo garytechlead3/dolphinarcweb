@@ -102,13 +102,13 @@ const Footer = () => {
                     <a href={socialIcons[0].link}>Join our server</a>
                 </div>
                 <div>
-                    <img src="//dolphin-footer.webp" alt="Dolphin Arc" />
+                    <img src="/dolphin-footer.webp" alt="Dolphin Arc" />
                 </div>
             </StyledFlex>
             <StyledFooter>
                 <div>
                     <Image
-                        src="//logo.svg"
+                        src="/logo.svg"
                         width="270"
                         height="80"
                         alt="Dolphin Arc NFT"
