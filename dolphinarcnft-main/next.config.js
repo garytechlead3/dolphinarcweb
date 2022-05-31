@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['*'],
+    domains: ['*','https://main.dwwi0f0wspqn8.amplifyapp.com'],
 }
 }
