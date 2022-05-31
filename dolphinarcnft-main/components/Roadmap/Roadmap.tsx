@@ -53,10 +53,10 @@ const Roadmap = () => {
             </h2>
             <StyledLine />
             {windowSize.width > 1000 ? (
-                <img src="/roadmap.webp" alt="Dolphin Arc roadmap" />
+                <img src="//roadmap.webp" alt="Dolphin Arc roadmap" />
             ) : (
                 <img
-                    src="/roadmap-mobile.webp"
+                    src="//roadmap-mobile.webp"
                     alt="Dolphin Arc roadmap"
                     className="mobile"
                 />

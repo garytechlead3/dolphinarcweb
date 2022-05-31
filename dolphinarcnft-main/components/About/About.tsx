@@ -186,7 +186,7 @@ const About: React.FC = () => {
         </div>
         <div className='image-container'>
           <Image
-            src='/about-orb.webp'
+            src='//about-orb.webp'
             width='800'
             height='751'
             alt='The elements make up the current world'
@@ -217,7 +217,7 @@ const About: React.FC = () => {
         </div>
         <div className='image-container'>
           <Image
-            src='/dolphin-orb.webp'
+            src='//dolphin-orb.webp'
             width='800'
             height='800'
             alt='Dolphin Arc'

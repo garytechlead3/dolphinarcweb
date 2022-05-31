@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { main, vice } from "../../utils/constants";
+import {emailSender} from "../../pages/api/email_sender"
 const StyledContainer = styled.div`
   width: 100%;
   height: auto;
@@ -260,6 +261,7 @@ transform:translateY(100px);
 interface CongratulationProps {
   month: string | string[];
   year: string | string[];
+  email:string|string[]
   // children: React.ReactNode;
 }
 interface IMain {
@@ -288,6 +290,16 @@ const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
     }
   };
   useEffect(() => {
+    const sendEmail = async () => {
+      if(generatedMain && generatedVice){
+      const res = await emailSender({
+        to: "maaz@on-chain.io",
+        subject: "test email",
+        body: "<h1>title</h1>"
+    })}}
+  sendEmail();
+  }, [generatedMain,generatedVice]);
+  useEffect(() => {
     setGeneratedVice(calcVice(month));
     setGeneratedMain(calcMain(year));
   }, [year, month]);
@@ -307,7 +319,7 @@ const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
               Main:
               <Image
                 className="sphere_img"
-                src="/Sphere_1.png"
+                src="//Sphere_1.png"
                 width="253"
                 height="253"
                 objectFit="contain"
@@ -319,7 +331,7 @@ const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
               Vice:
               <Image
                 className="sphere_img"
-                src="/Sphere_2.png"
+                src="//Sphere_2.png"
                 width="193"
                 height="193"
                 objectFit="contain"
@@ -341,7 +353,7 @@ const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
                   <div className="card_img">
                     <Image
                       className="img"
-                      src={"/" + generatedMain?.imageUrl}
+                      src={"//" + generatedMain?.imageUrl}
                       width="430"
                       height="300"
                       objectFit="fill"
@@ -355,7 +367,7 @@ const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
                   <div className="card_img">
                     <Image
                       className="img"
-                      src={"/" + generatedVice?.imageUrl}
+                      src={"//" + generatedVice?.imageUrl}
                       width="430"
                       height="300"
                       objectFit="fill"
@@ -369,7 +381,7 @@ const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
         <div className="line">
           <Image
             className="vertical_line"
-            src="/vertical_line.png"
+            src="//vertical_line.png"
             width="50"
             height="400"
             objectFit="contain"

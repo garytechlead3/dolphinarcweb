@@ -138,7 +138,7 @@ const Header: React.FC = () => {
             <StyledHeader>
                 <HeaderItem>
                     <Image
-                        src="/logo.svg"
+                        src="//logo.svg"
                         width="270"
                         height="80"
                         alt="Dolphin Arc NFT"
@@ -158,7 +158,7 @@ const Header: React.FC = () => {
                 <StyledOffHeader>
                     <div>
                         <Image
-                            src="/logo.svg"
+                            src="//logo.svg"
                             width="270"
                             height="80"
                             alt="Dolphin Arc NFT"

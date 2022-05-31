@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 const Result = () => {
   const router = useRouter();
-  const { month, year } = router.query;
+  const { month, year,email } = router.query;
   return (
     <>
       <Head>
@@ -27,7 +27,7 @@ const Result = () => {
         />
         <title>Dolphin Arc NFT</title>
       </Head>
-      <Congratulations month={month} year={year} />
+      <Congratulations month={month} year={year} email={email} />
       <Footer />
     </>
   );
