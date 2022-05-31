@@ -4,6 +4,8 @@ import React from "react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { main, vice } from "../../utils/constants";
+import { emailSender } from "../../pages/api/email.sender";
+import { emailTemplate } from "../../email_template/email-template";
 const StyledContainer = styled.div`
   width: 100%;
   height: auto;
@@ -187,79 +189,68 @@ const CustomizedMetaVerseContainer = styled.div`
       display: flex;
       justify-content: space-around;
       @media screen and (max-width: 600px) {
-          flex-direction:column;
-
-      }
-      #left{
-      
-      h3 {
-        position: relative;
-        width:50%
-        display: flex;
-        margin: 0rem 3rem;
-        display: flex;
-        text-align: left;
         flex-direction: column;
-        background: #7598ec;
-        background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        @media screen and (max-width: 600px) {
-            font-size:2.6rem;
-        }
-        .card_img {
-      
-
-          img{
-            width:100%;
-            border-radius:20px;
-          border:2px solid #eecafc !important;
-       
-
-          }
-           
-
-        }
-    }
       }
-      #right{
-transform:translateY(100px);
-      
-      h3 {
-        position: relative;
-        width:50%
-        display: flex;
-        margin: 0rem 3rem;
-        display: flex;
-        text-align: left;
-        flex-direction: column;
-        background: #7598ec;
-        background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        @media screen and (max-width: 600px) {
-            font-size:2.6rem;
-        }
-        .card_img {
-        
-
-          img{
-            width:100%;
-          border:2px solid #fccaf1 !important;
-            border-radius:20px;
+      #left {
+        h3 {
+          position: relative;
+          /* width: 50%; */
+          display: flex;
+          margin: 0rem 3rem;
+          display: flex;
+          text-align: left;
+          flex-direction: column;
+          background: #7598ec;
+          background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          @media screen and (max-width: 600px) {
+            font-size: 2.6rem;
           }
-           
-
+          .card_img {
+            img {
+              width: 100%;
+              border-radius: 20px;
+              border: 2px solid #eecafc !important;
+            }
+          }
         }
-    }
       }
-     
+      #right {
+        transform: translateY(100px);
+
+        h3 {
+          position: relative;
+          /* width: 50%; */
+          display: flex;
+          margin: 0rem 3rem;
+          display: flex;
+          text-align: left;
+          flex-direction: column;
+          background: #7598ec;
+          background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          @media screen and (max-width: 600px) {
+            font-size: 2.6rem;
+          }
+          .card_img {
+            img {
+              width: 100%;
+              border: 2px solid #fccaf1 !important;
+              border-radius: 20px;
+            }
+          }
+        }
+      }
     }
   }
 `;
 interface CongratulationProps {
   month: string | string[];
   year: string | string[];
+  email: string | string[];
+
   // children: React.ReactNode;
 }
 interface IMain {
@@ -267,30 +258,56 @@ interface IMain {
   year: number[];
   main: string;
   imageUrl: string;
+  description: string;
 }
 interface IVice {
   month: number[];
   vice: string;
   imageUrl: string;
+  description: string;
 }
-const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
+const Congratulations: React.FC<CongratulationProps> = ({
+  month,
+  year,
+  email,
+}) => {
   const [generatedMain, setGeneratedMain] = useState<IMain>();
   const [generatedVice, setGeneratedVice] = useState<IVice>();
-
   const calcMain = (year) => {
     for (let group of main) {
       if (group?.year.includes(parseInt(year))) return group;
     }
   };
+
   const calcVice = (month) => {
     for (let obj of vice) {
       if (obj?.month.includes(parseInt(month))) return obj;
     }
   };
+
   useEffect(() => {
     setGeneratedVice(calcVice(month));
     setGeneratedMain(calcMain(year));
   }, [year, month]);
+  useEffect(() => {
+    if (!generatedMain || !generatedVice || !email) return;
+    const sendEmail = async () => {
+      const res = await emailSender({
+        to: email,
+        subject: "Dolphin Arc NFT",
+        body: `${emailTemplate(
+          email,
+          generatedVice?.vice,
+          generatedVice?.description,
+          generatedMain?.main,
+          generatedMain?.description
+        )}`,
+      });
+    };
+    sendEmail();
+  }, [generatedMain, generatedVice]);
+  console.log(generatedMain, "main");
+  console.log(generatedVice, "vice");
 
   return (
     <StyledContainer>
@@ -307,7 +324,7 @@ const Congratulations: React.FC<CongratulationProps> = ({ month, year }) => {
               Main:
               <Image
                 className="sphere_img"
-                src="/Sphere_1.png"
+                src="/Sphere_2.png"
                 width="253"
                 height="253"
                 objectFit="contain"
