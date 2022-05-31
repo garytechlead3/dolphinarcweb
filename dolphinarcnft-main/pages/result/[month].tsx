@@ -1,8 +1,10 @@
 import Head from "next/head";
 import Footer from "../../components/Footer/Footer";
-import Congratulations from "../../components/Congratulations/Congratulation";
+// import Congratulations from "";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
+const Congratulations = dynamic(() => import("../../components/Congratulations/Congratulation"));
 const Result = () => {
   const router = useRouter();
   const { month, year, email } = router.query;
