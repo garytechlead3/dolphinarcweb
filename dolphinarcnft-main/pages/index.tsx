@@ -1,11 +1,11 @@
 import Head from "next/head";
 import About from "../components/About/About";
 import Footer from "../components/Footer/Footer";
-// import Main from '../components/Main/Main'
+import Main from '../components/Main/Main'
 import Roadmap from "../components/Roadmap/Roadmap";
 import dynamic from "next/dynamic";
 
-const Main = dynamic(() => import("../components/Main/Main"));
+// const Main = dynamic(() => import("../components/Main/Main"));
 const Home = () => {
   return (
     <>

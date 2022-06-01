@@ -108,7 +108,7 @@ const Footer = () => {
             <StyledFooter>
                 <div>
                     <Image
-                        src="/logo.svg"
+                        src="//logo.svg"
                         width="270"
                         height="80"
                         alt="Dolphin Arc NFT"

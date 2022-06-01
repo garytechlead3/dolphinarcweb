@@ -323,7 +323,7 @@ const Congratulations: React.FC<CongratulationProps> = ({
               Main:
               <Image
                 className="sphere_img"
-                src="/Sphere_2.png"
+                src="//Sphere_2.png"
                 width="253"
                 height="253"
                 objectFit="contain"
@@ -335,7 +335,7 @@ const Congratulations: React.FC<CongratulationProps> = ({
               Vice:
               <Image
                 className="sphere_img"
-                src="/Sphere_2.png"
+                src="//Sphere_2.png"
                 width="193"
                 height="193"
                 objectFit="contain"
@@ -357,7 +357,7 @@ const Congratulations: React.FC<CongratulationProps> = ({
                   <div className="card_img">
                     <Image
                       className="img"
-                      src={"/" + generatedMain?.imageUrl}
+                      src={"//" + generatedMain?.imageUrl}
                       width="430"
                       height="300"
                       objectFit="fill"
@@ -371,7 +371,7 @@ const Congratulations: React.FC<CongratulationProps> = ({
                   <div className="card_img">
                     <Image
                       className="img"
-                      src={"/" + generatedVice?.imageUrl}
+                      src={"//" + generatedVice?.imageUrl}
                       width="430"
                       height="300"
                       objectFit="fill"
@@ -385,7 +385,7 @@ const Congratulations: React.FC<CongratulationProps> = ({
         <div className="line">
           <Image
             className="vertical_line"
-            src="/vertical_line.png"
+            src="//vertical_line.png"
             width="50"
             height="400"
             objectFit="contain"
