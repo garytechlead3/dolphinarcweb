@@ -173,14 +173,13 @@ const ElementFinderForm: React.FC = () => {
     setDayErr("");
     setMonthErr("");
     setYearErr("");
-
     if (!validYears.includes(parseInt(data?.year)))
       return setYearErr("Select b/w 1979-2026");
     if (!validMonths.includes(parseInt(data?.month)))
       return setMonthErr("Select between 1 - 12");
 
-    if (parseInt(data?.day) > validDays)
-      return setDayErr(`select between 0 - ${validDays.toString()}`);
+    if (parseInt(data?.day) > validDays || !data?.day)
+      return setDayErr(`select between 1 - ${validDays.toString()}`);
     if (!data?.email) return setEmailErr("Please provide email");
 
     return router.push({
