@@ -184,9 +184,10 @@ const ElementFinderForm: React.FC = () => {
     if (!data?.email) return setEmailErr("Please provide email");
 
     return router.push({
-      pathname: `/result/[month]`,
+      pathname: `/result/`,
       query: { month: data?.month, year: data?.year, email: data?.email },
     });
+    // return router.push("/result")
   };
   return (
     <StyledContainer>

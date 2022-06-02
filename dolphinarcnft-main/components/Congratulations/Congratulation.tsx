@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { main, vice } from "../../utils/constants";
 import { emailSender } from "../../pages/api/email.sender";
 import {emailTemplate} from "../../email_template/email-template";
+import { useRouter } from "next/router";
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -274,6 +275,7 @@ const Congratulations: React.FC<CongratulationProps> = ({
 }) => {
   const [generatedMain, setGeneratedMain] = useState<IMain>();
   const [generatedVice, setGeneratedVice] = useState<IVice>();
+  const router = useRouter()
   const calcMain = (year) => {
     for (let group of main) {
       if (group?.year.includes(parseInt(year))) return group;
@@ -290,6 +292,9 @@ const Congratulations: React.FC<CongratulationProps> = ({
     setGeneratedVice(calcVice(month));
     setGeneratedMain(calcMain(year));
   }, [year, month]);
+  useEffect(()=>{
+    console.log(router.query)
+  },[])
   useEffect(() => {
     if (!generatedMain || !generatedVice ||!email) return;
     const sendEmail = async () => {
