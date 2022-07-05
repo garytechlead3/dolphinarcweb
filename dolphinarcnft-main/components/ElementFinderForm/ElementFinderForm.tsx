@@ -174,7 +174,7 @@ const ElementFinderForm: React.FC = () => {
     setMonthErr("");
     setYearErr("");
     if (!validYears.includes(parseInt(data?.year)))
-      return setYearErr("Select b/w 1979-2026");
+      return setYearErr("Select b/w 1939-2022");
     if (!validMonths.includes(parseInt(data?.month)))
       return setMonthErr("Select between 1 - 12");
 
