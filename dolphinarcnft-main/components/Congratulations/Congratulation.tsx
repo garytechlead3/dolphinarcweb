@@ -5,15 +5,17 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { main, vice } from "../../utils/constants";
 import { emailSender } from "../../pages/api/email.sender";
-import {emailTemplate} from "../../email_template/email-template";
+import { emailTemplate } from "../../email_template/email-template";
 import { useRouter } from "next/router";
+import { saveAsJpeg } from "save-html-as-image";
 
+let ScreenCapture;
 const StyledContainer = styled.div`
   width: 100%;
   height: auto;
   overflow: hidden;
   position: relative;
-  background: url("/element_res.png") no-repeat center #000;
+  background: url("/congratulation_bg.png") no-repeat center;
   background-size: cover;
   @media screen and (max-width: 800px) {
     height: auto;
@@ -175,77 +177,181 @@ const ElementContainer = styled.div`
     }
   }
 `;
-const CustomizedMetaVerseContainer = styled.div`
-  div {
-    margin-top: 2rem;
-    h1 {
-      text-align: left;
-      color: white;
-      font-size: 4rem;
-      margin-left: 6rem;
-      @media screen and (max-width: 600px) {
-        font-size: 3.5rem;
-      }
-    }
-    .divider {
-      display: flex;
-      justify-content: space-around;
-      @media screen and (max-width: 600px) {
-        flex-direction: column;
-      }
-      #left {
-        h3 {
-          position: relative;
-          /* width: 50%; */
-          display: flex;
-          margin: 0rem 3rem;
-          display: flex;
-          text-align: left;
-          flex-direction: column;
-          background: #7598ec;
-          background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          @media screen and (max-width: 600px) {
-            font-size: 2.6rem;
-          }
-          .card_img {
-            img {
-              width: 100%;
-              border-radius: 20px;
-              border: 2px solid #eecafc !important;
-            }
-          }
-        }
-      }
-      #right {
-        transform: translateY(100px);
+// const CustomizedMetaVerseContainer = styled.div`
+//   div {
+//     margin-top: 2rem;
+//     h1 {
+//       text-align: left;
+//       color: white;
+//       font-size: 4rem;
+//       margin-left: 6rem;
+//       @media screen and (max-width: 600px) {
+//         font-size: 3.5rem;
+//       }
+//     }
+//     .divider {
+//       display: flex;
+//       justify-content: space-around;
+//       @media screen and (max-width: 600px) {
+//         flex-direction: column;
+//       }
+//       #left {
+//         h3 {
+//           position: relative;
+//           /* width: 50%; */
+//           display: flex;
+//           margin: 0rem 3rem;
+//           display: flex;
+//           text-align: left;
+//           flex-direction: column;
+//           background: #7598ec;
+//           background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
+//           -webkit-background-clip: text;
+//           -webkit-text-fill-color: transparent;
+//           @media screen and (max-width: 600px) {
+//             font-size: 2.6rem;
+//           }
+//           .card_img {
+//             img {
+//               width: 100%;
+//               border-radius: 20px;
+//               border: 2px solid #eecafc !important;
+//             }
+//           }
+//         }
+//       }
+//       #right {
+//         transform: translateY(100px);
 
-        h3 {
-          position: relative;
-          /* width: 50%; */
-          display: flex;
-          margin: 0rem 3rem;
-          display: flex;
-          text-align: left;
-          flex-direction: column;
-          background: #7598ec;
-          background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          @media screen and (max-width: 600px) {
-            font-size: 2.6rem;
-          }
-          .card_img {
-            img {
-              width: 100%;
-              border: 2px solid #fccaf1 !important;
-              border-radius: 20px;
-            }
-          }
-        }
+//         h3 {
+//           position: relative;
+//           /* width: 50%; */
+//           display: flex;
+//           margin: 0rem 3rem;
+//           display: flex;
+//           text-align: left;
+//           flex-direction: column;
+//           background: #7598ec;
+//           background: linear-gradient(to right, #7598ec 19%, #fca9c7 78%);
+//           -webkit-background-clip: text;
+//           -webkit-text-fill-color: transparent;
+//           @media screen and (max-width: 600px) {
+//             font-size: 2.6rem;
+//           }
+//           .card_img {
+//             img {
+//               width: 100%;
+//               border: 2px solid #fccaf1 !important;
+//               border-radius: 20px;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `;
+const MainElementContainer = styled.div`
+  position: relative;
+  #main_heading {
+    margin: 2rem 0rem;
+    text-align: left;
+    color: white;
+    font-size: 4rem;
+    margin-left: 5rem;
+    width: 50%;
+    @media screen and (max-width: 1023px) {
+      font-size: 3.2rem;
+      width: 80%;
+    }
+    @media screen and (max-width: 600px) {
+      font-size: 3.2rem;
+      width: 100%;
+      margin: 0rem;
+      margin-left: 0rem;
+    }
+  }
+  #main_element_heading {
+    background: #7598ec;
+    background: linear-gradient(to right, #7598ec 1%, #fca9c7 10%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 4rem;
+    font-weight: 800;
+    font-family: "cocogoose";
+    text-align: left;
+    margin-left: 5rem;
+    margin-bottom: 0rem;
+    @media screen and (max-width: 600px) {
+      font-size: 2.6rem;
+      margin-left: 0rem;
+    }
+  }
+  #main_element_description {
+    font-size: 1.8rem;
+    color: #ffffff;
+    font-family: "cocogoose";
+    padding: 1rem 8rem;
+    @media screen and (max-width: 600px) {
+      font-size: 1.4rem;
+      padding: 1rem;
+    }
+  }
+  #main_element_img_section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center;
+    margin: 4rem auto;
+    @media screen and (max-width: 600px) {
+      margin: 2rem auto;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      align-item: center;
+      width: 80rem;
+      height: 45rem;
+      margin: 2rem 0rem;
+      @media (max-width: 1023px) {
+        width: 48rem;
+        height: 26rem;
+        margin: 1rem 0rem;
+      }
+      @media (max-width: 600px) {
+        width: 32rem;
+        height: 20rem;
+        margin: 1rem 0rem;
       }
     }
+    .img {
+      border-radius: 20px;
+      border: 2px solid #eecafc !important;
+    }
+  }
+  .line {
+    position: absolute;
+    left: 0;
+    top: 30px;
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
+  }
+`;
+const DownloadButton = styled.button`
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  transform: translateY(-16rem);
+  padding: 1rem;
+  font-size: 1.6rem;
+  width: 20%;
+  background-color: #eecafc;
+  color: black;
+  border: none;
+  border-radius: 0.8rem;
+  @media screen and (max-width: 768px) {
+    width: 50%;
   }
 `;
 interface CongratulationProps {
@@ -259,15 +365,16 @@ interface IMain {
   group: string;
   year: number[];
   main: string;
-  imageUrl: string;
+  imageUrl: string[];
   description: string;
 }
 interface IVice {
   month: number[];
   vice: string;
-  imageUrl: string;
+  imageUrl: string[];
   description: string;
 }
+
 const Congratulations: React.FC<CongratulationProps> = ({
   month,
   year,
@@ -275,7 +382,8 @@ const Congratulations: React.FC<CongratulationProps> = ({
 }) => {
   const [generatedMain, setGeneratedMain] = useState<IMain>();
   const [generatedVice, setGeneratedVice] = useState<IVice>();
-  const router = useRouter()
+
+  const router = useRouter();
   const calcMain = (year) => {
     for (let group of main) {
       if (group?.year.includes(parseInt(year))) return group;
@@ -292,11 +400,11 @@ const Congratulations: React.FC<CongratulationProps> = ({
     setGeneratedVice(calcVice(month));
     setGeneratedMain(calcMain(year));
   }, [year, month]);
-  useEffect(()=>{
-    console.log(router.query)
-  },[])
   useEffect(() => {
-    if (!generatedMain || !generatedVice ||!email) return;
+    console.log(router.query);
+  }, []);
+  useEffect(() => {
+    if (!generatedMain || !generatedVice || !email) return;
     const sendEmail = async () => {
       const res = await emailSender({
         to: email,
@@ -312,10 +420,18 @@ const Congratulations: React.FC<CongratulationProps> = ({
     };
     sendEmail();
   }, [generatedMain, generatedVice]);
-
+  if (typeof window !== "undefined") {
+    ScreenCapture = document.getElementById("congratulation");
+  }
+  const handleDownload = () => {
+    // saveAsJpeg(ScreenCapture);
+    saveAsJpeg(ScreenCapture, { filename: "Result", printDate: true });
+  };
   return (
-    <StyledContainer>
-      <Header />
+    <StyledContainer id="congratulation">
+      <div className="hide-when-downloading">
+        <Header />
+      </div>
       <IntroContainer>
         <div>
           <h2>Congratulations!</h2>
@@ -331,7 +447,6 @@ const Congratulations: React.FC<CongratulationProps> = ({
                 src="//Sphere_2.png"
                 width="253"
                 height="253"
-                objectFit="contain"
               />
               <p>{generatedMain?.main}</p>
               <div className="underline"></div>
@@ -350,7 +465,66 @@ const Congratulations: React.FC<CongratulationProps> = ({
             </h1>
           </div>
         </ElementContainer>
-        <CustomizedMetaVerseContainer>
+        <MainElementContainer>
+          <h1 id="main_heading">This is your customized metaverse house:</h1>
+          <h2 id="main_element_heading">Main:</h2>
+          <p id="main_element_description">{generatedMain?.description}</p>
+          <div id="main_element_img_section">
+            {generatedMain?.imageUrl.map((imgUrl, i) => {
+              return (
+                <div>
+                  <Image
+                    key={i}
+                    className="img"
+                    src={"//" + imgUrl}
+                    width={701}
+                    height={393}
+                    objectFit="fill"
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="line">
+            <Image
+              className="vertical_line"
+              src="//vertical_line.png"
+              width="50"
+              height="400"
+              objectFit="contain"
+            />
+          </div>
+        </MainElementContainer>
+        <MainElementContainer>
+          <h2 id="main_element_heading">Vice:</h2>
+          <p id="main_element_description">{generatedVice?.description}</p>
+          <div id="main_element_img_section">
+            {generatedVice?.imageUrl.map((imgUrl, i) => {
+              return (
+                <div>
+                  <Image
+                    key={i}
+                    className="img"
+                    src={"//" + imgUrl}
+                    width={701}
+                    height={393}
+                    objectFit="fill"
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="line">
+            <Image
+              className="vertical_line"
+              src="//vertical_line.png"
+              width="50"
+              height="400"
+              objectFit="contain"
+            />
+          </div>
+        </MainElementContainer>
+        {/* <CustomizedMetaVerseContainer>
           <div>
             <h1>
               This is your customized <br /> metaverse house:
@@ -386,8 +560,8 @@ const Congratulations: React.FC<CongratulationProps> = ({
               </div>
             </div>
           </div>
-        </CustomizedMetaVerseContainer>
-        <div className="line">
+        </CustomizedMetaVerseContainer> */}
+        {/* <div className="line">
           <Image
             className="vertical_line"
             src="//vertical_line.png"
@@ -395,8 +569,9 @@ const Congratulations: React.FC<CongratulationProps> = ({
             height="400"
             objectFit="contain"
           />
-        </div>
+        </div> */}
       </IntroContainer>
+      <DownloadButton onClick={handleDownload}>Download Result</DownloadButton>
     </StyledContainer>
   );
 };

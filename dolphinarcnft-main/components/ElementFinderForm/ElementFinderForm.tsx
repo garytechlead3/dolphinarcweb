@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Header from "../Header/Header";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { main, vice } from "../../utils/constants";
 
@@ -115,7 +115,6 @@ const FormContainer = styled.div`
           width: 100%;
         }
       }
-    
 
       .email_input {
         width: 40rem;
@@ -131,8 +130,25 @@ const FormContainer = styled.div`
     }
   }
 `;
+// const Form = styled.div`
+//   padding-top: 3rem;
+// `;
+// const newsletter = `
+//     <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/shell.js"></script>
+//     <script>
+//     hbspt.forms.create({
+//         region: "na1",
+//         portalId: "21629815",
+//         formId: "2647525c-eb28-4fc5-9400-d7fe7720b8eb"
+//     });
+//     </script>
+// `;
 
 const ElementFinderForm: React.FC = () => {
+  // const [content, setContent] = useState("");
+  // useEffect(() => {
+  //   setContent(newsletter);
+  // }, [newsletter]);
   const router = useRouter();
   interface IData {
     year: string;
@@ -245,6 +261,7 @@ const ElementFinderForm: React.FC = () => {
                 value={data?.email}
                 onChange={(e) => handleChange(e)}
               />
+              {/* <Form dangerouslySetInnerHTML={{ __html: newsletter }} /> */}
               <Error>{emailErr && emailErr}</Error>
             </label>
           </div>
